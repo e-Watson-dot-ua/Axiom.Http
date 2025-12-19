@@ -1,0 +1,3 @@
+# Keep folder structure for deployment files
+# This file ensures that the 'deploy' directory is tracked by Git
+# even when it is empty. Do not delete this file.
