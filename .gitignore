@@ -1,0 +1,13 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# VS / Rider
+.vs/
+.idea/
+*.user
+*.suo
+
+# NuGet artifacts output folder (ignore everything except .gitkeep)
+/deploy/*
+!/deploy/.gitkeep
