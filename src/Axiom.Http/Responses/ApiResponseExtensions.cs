@@ -32,7 +32,8 @@ public static class ApiResponseExtensions
     /// <summary>
     /// Adds/overwrites a metadata entry and returns a new response instance.
     /// </summary>
-    public static ApiResponse<TData> WithMetadata<TData>(this ApiResponse<TData> response, string key, object value)
+    public static ApiResponse<TData> WithMetadata<TData>(this ApiResponse<TData> response, 
+        string key, object value)
     {
         ArgumentNullException.ThrowIfNull(response);
         ArgumentException.ThrowIfNullOrWhiteSpace(key);
@@ -54,7 +55,8 @@ public static class ApiResponseExtensions
     /// <summary>
     /// Attempts to read a strongly-typed value from response metadata.
     /// </summary>
-    public static bool TryGetMetadata<TData, T>(this ApiResponse<TData> response, string key, out T? value)
+    public static bool TryGetMetadata<TData, T>(this ApiResponse<TData> response, 
+        string key, out T? value)
     {
         ArgumentNullException.ThrowIfNull(response);
         ArgumentException.ThrowIfNullOrWhiteSpace(key);
@@ -66,7 +68,8 @@ public static class ApiResponseExtensions
     /// Maps a successful API response to another data type.
     /// If the mapper returns <c>null</c>, the mapped response will have <c>Data = default</c>.
     /// </summary>
-    public static ApiResponse<TOut> Map<TIn, TOut>(this ApiResponse<TIn> response, Func<TIn?, TOut?> mapper)
+    public static ApiResponse<TOut> Map<TIn, TOut>(this ApiResponse<TIn> response, 
+        Func<TIn?, TOut?> mapper)
     {
         ArgumentNullException.ThrowIfNull(response);
         ArgumentNullException.ThrowIfNull(mapper);
@@ -101,7 +104,8 @@ public static class ApiResponseExtensions
     /// <summary>
     /// Converts a failed response into a minimal RFC 7807-style object.
     /// </summary>
-    public static ProblemDetails ToProblemDetails(this ApiResponse response, int? status = null, string? title = null)
+    public static ProblemDetails ToProblemDetails(this ApiResponse response,
+        int? status = null, string? title = null)
     {
         ArgumentNullException.ThrowIfNull(response);
 
@@ -129,7 +133,8 @@ public static class ApiResponseExtensions
             Extensions: extensions);
     }
 
-    private static Dictionary<string, object> CreateMetadata(Dictionary<string, object>? existing, string key, object value)
+    private static Dictionary<string, object> CreateMetadata(Dictionary<string, object>? existing,
+        string key, object value)
     {
         var metadata = existing is null
             ? new Dictionary<string, object>()
@@ -139,7 +144,8 @@ public static class ApiResponseExtensions
         return metadata;
     }
 
-    private static bool TryGetMetadataCore<T>(Dictionary<string, object>? metadata, string key, out T? value)
+    private static bool TryGetMetadataCore<T>(Dictionary<string, object>? metadata,
+        string key, out T? value)
     {
         value = default;
 

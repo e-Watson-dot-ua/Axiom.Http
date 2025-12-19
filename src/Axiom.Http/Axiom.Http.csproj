@@ -4,10 +4,32 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <!-- Package metadata -->
+        <PackageId>Axiom.Http</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>e-Watson-dot-ua</Authors>
+        <Company>Axiom</Company>
+        <Description>HTTP response models and helpers used across the Axiom solution.</Description>
+        <PackageTags>http;responses;api;axiom</PackageTags>
+        <!-- Update RepositoryUrl to your repository if available -->
+        <RepositoryUrl>https://github.com/e-Watson-dot-ua/Axiom.Http</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeSymbols>false</IncludeSymbols>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <!-- Output path for generated NuGet packages on build -->
+        <PackageOutputPath>C:\dev\Axiom.Http\deploy</PackageOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Axiom.Core" Version="1.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <!-- Pack the repository root README.md into the package root as README.md -->
+      <None Include="..\..\README.md" Pack="true" PackagePath="" Visible="false" />
     </ItemGroup>
 
 </Project>

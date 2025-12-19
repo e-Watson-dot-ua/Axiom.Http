@@ -94,6 +94,52 @@ When adding new convenience methods or new response types:
 - Add XML docs to public types to improve discoverability in IDEs.
 - If you want, I can also refactor `ApiResponseExtensions` to remove duplication and add tests — let me know and I will do that next.
 
+## Building the NuGet package (how-to)
+
+This project is configured to produce a NuGet package. Below are a few ways to build the package and verify the output.
+
+Prerequisites
+- .NET SDK installed (recommended: .NET 8). Verify with:
+
+```powershell
+dotnet --version
+```
+
+Option A — Build (packages generated on build)
+- The project sets `GeneratePackageOnBuild` so a `dotnet build -c Release` will produce a `.nupkg` automatically. From the project folder:
+
+```powershell
+cd C:\dev\Axiom.Http\src\Axiom.Http
+dotnet build -c Release
+```
+
+- By default this repository sets the package output path to `C:\dev\Axiom.Http\deploy` (see the `PackageOutputPath` property in `Axiom.Http.csproj`). After the build the package will appear in that folder, for example:
+
+```powershell
+Get-ChildItem 'C:\dev\Axiom.Http\deploy' -Filter 'Axiom.Http*.nupkg' | Select-Object Name,Length,LastWriteTime
+```
+
+Option B — Pack explicitly
+- You can also call `dotnet pack` explicitly (this will ignore `GeneratePackageOnBuild` and produce a package based on pack-time options):
+
+```powershell
+dotnet pack "C:\dev\Axiom.Http\src\Axiom.Http\Axiom.Http.csproj" -c Release -o "C:\dev\Axiom.Http\deploy"
+```
+
+Verify package contents
+- A `.nupkg` file is just a ZIP archive. To inspect its contents (README, nuspec, lib assemblies) you can copy to `.zip` and expand it:
+
+```powershell
+Copy-Item 'C:\dev\Axiom.Http\deploy\Axiom.Http.1.0.0.nupkg' 'C:\temp\Axiom.Http.nupkg.zip' -Force
+Expand-Archive -Path 'C:\temp\Axiom.Http.nupkg.zip' -DestinationPath 'C:\temp\axpkg'
+Get-ChildItem 'C:\temp\axpkg' -Recurse | Select-Object FullName,Length
+```
+
+Notes
+- The package is already configured to include the repository root `README.md` (packed into the package root as `README.md`) via the project file. If you want a different README or to change what is included, update `Axiom.Http.csproj` and the `None Include` entry for the README.
+- To change where the package is written, modify the `PackageOutputPath` property in `Axiom.Http.csproj` (or pass `-o` to `dotnet pack`).
+- For CI: prefer `dotnet pack` (or `dotnet build` with `GeneratePackageOnBuild`) in a Release configuration and push the produced `.nupkg` to your feed.
+
 ## License
 
 Check the repository root for the project's license file; use the same license when contributing.
@@ -101,4 +147,3 @@ Check the repository root for the project's license file; use the same license w
 ---
 
 (Generated on 2025-12-19)
-
